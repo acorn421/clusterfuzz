@@ -1,0 +1,18 @@
+diff --git a/src/local/butler/run_server.py b/src/local/butler/run_server.py
+index 315a5eb5..9871d021 100644
+--- a/src/local/butler/run_server.py
++++ b/src/local/butler/run_server.py
+@@ -181,11 +181,11 @@ def execute(args):
+   os.environ['GAE_ENV'] = 'dev'
+   try:
+     cron_server = common.execute_async(
+-        'gunicorn -b :{port} main:app'.format(port=constants.CRON_SERVICE_PORT),
++        'gunicorn --timeout 60 --worker-tmp-dir /dev/shm --workers 2 -b :{port} main:app'.format(port=constants.CRON_SERVICE_PORT),
+         cwd=os.path.join('src', 'appengine'))
+
+     common.execute(
+-        'gunicorn -b :{port} main:app'.format(
++        'gunicorn --timeout 60 --worker-tmp-dir /dev/shm --workers 2 -b :{port} main:app'.format(
+             port=constants.DEV_APPSERVER_PORT),
+         cwd=os.path.join('src', 'appengine'))
+   except KeyboardInterrupt:
