@@ -97,7 +97,7 @@ RUN pip3.7 install pipenv
 # Install Golang
 RUN curl -L -O https://go.dev/dl/go1.22.5.linux-amd64.tar.gz
 RUN tar -C /usr/local -xzf go1.22.5.linux-amd64.tar.gz
-RUN echo "export PATH=$PATH:/usr/local/go/bin" >> ~/.profile
+RUN echo "export PATH=\$PATH:/usr/local/go/bin" >> ~/.bashrc
 
 # Install Google Cloud SDK
 # RUN echo "deb https://packages.cloud.google.com/apt cloud-sdk main" \
@@ -130,10 +130,10 @@ RUN git config --global user.email "acorn421@gmail.com"
 
 # Install clusterfuzz
 RUN cd /work/ && \
-    git clone https://github.com/google/clusterfuzz.git && \
+    git clone https://github.com/acorn421/clusterfuzz.git && \
     cd clusterfuzz && \
     git pull && \
-    git checkout tags/v2.6.0 && \
+    # git checkout tags/v2.6.0 && \
     PYTHON=python3.7 ./local/install_deps.bash
 
 # Passwordless sudo (needed for AFL launcher).
