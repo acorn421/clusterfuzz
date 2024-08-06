@@ -31,3 +31,4 @@ export RUN_CMD='python3.7 butler.py run_server --storage-path=/mnt/nas/clusterfu
 # Run the server
 cd $ROOT_DIR
 pipenv run python3.7 butler.py run_server --storage-path=/mnt/nas/clusterfuzz/ --bootstrap
+# pipenv run python3.7 butler.py run_server --storage-path=/mnt/nas/clusterfuzz/ --skip-install-deps

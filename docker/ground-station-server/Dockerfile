@@ -143,7 +143,7 @@ RUN cd /work/ && \
     git clone https://github.com/acorn421/clusterfuzz.git && \
     cd clusterfuzz && \
     git pull && \
-    # git checkout tags/v2.6.0 && \
+    git checkout tags/v2.6.1 && \
     PYTHON=python3.7 ./local/install_deps.bash
 
 # Passwordless sudo (needed for AFL launcher).

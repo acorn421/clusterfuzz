@@ -17,6 +17,7 @@ services:
       - bridge_network
     stdin_open: true
     tty: true
+    # command: bash
 
 volumes:
   nfs_volume:
