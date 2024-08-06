@@ -31,6 +31,13 @@ WORKDIR /work
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+# EXPOSE 9000
+# EXPOSE 9009
+# EXPOSE 9002
+# EXPOSE 9004
+# EXPOSE 9006
+# EXPOSE 9008
+
 # Install common dependencies
 RUN apt-get update && \
     apt-get upgrade -y && \
@@ -68,7 +75,10 @@ RUN apt-get update && \
         vim \ 
         git \ 
         nfs-common \
-        autofs
+        autofs \
+        nginx \
+        gettext-base
+
 
 # Install clusterfuzz
 COPY --from=xenial \
@@ -159,7 +169,7 @@ RUN /work/install_gnuradio.sh && \
     /work/install_gr_soapy.sh
 
 # COPY setup_nfs.sh /work/
-COPY setup_common.sh setup_clusterfuzz.sh start_clusterfuzz.sh start.sh /work/
-RUN chmod a+x /work/setup_common.sh /work/setup_clusterfuzz.sh /work/start_clusterfuzz.sh /work/start.sh
+COPY setup_common.sh setup_clusterfuzz.sh start_server.sh /work/
+RUN chmod a+x /work/setup_common.sh /work/setup_clusterfuzz.sh /work/start_server.sh
 
-CMD ["bash", "-ex", "/work/start.sh"]
+CMD ["bash", "-ex", "/work/start_server.sh"]

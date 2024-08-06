@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  gs-clusterfuzz-bot:
+    image: gs-clusterfuzz-bot:1.0.0
+    container_name: gs-clusterfuzz-bot
+    volumes:
+      - nfs_volume:/mnt/nas
+    ports:
+      - "7123:7123"
+    networks:
+      - bridge_network
+    environment:
+      - CLUSTERFUZZ_SERVER_HOST=192.168.0.49
+    stdin_open: true
+    tty: true
+
+volumes:
+  nfs_volume:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=192.168.0.2,proto=tcp,rw,nfsvers=4
+      device: :/volume1/space_security
+
+networks:
+  bridge_network:
+    driver: bridge

@@ -1,11 +1,10 @@
-#!/bin/bash -ex
 # Copyright 2019 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#      http://www.apache.org/licenses/LICENSE-2.0
+# http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,12 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-export DISPLAY=:1
-export LANG=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
-export PATH="$EXTRA_PATH:$PATH"
-export TZ='Asia/Seoul'
+# FROM gcr.io/clusterfuzz-images/base
 
-# PATH, PYTHONPATH and LD_* are removed by sudo even with -E,
-# so we pass them explicitly.
-bash -c "PATH='$PATH' PYTHONPATH='$PYTHONPATH' LD_LIBRARY_PATH='$LD_LIBRARY_PATH' $RUN_CMD"
+# Build from the Ubuntu 20.04
+FROM gs-clusterfuzz-server:1.0.0
+ENV DEBIAN_FRONTEND=noninteractive
+
+# EXPOSE 7123
+
+# Port forwarding
+COPY nginx_template.conf /etc/nginx/nginx_template.conf
+
+COPY start_bot.sh /work/start_bot.sh
+RUN chmod a+x /work/start_bot.sh
+
+CMD ["bash", "-ex", "/work/start_bot.sh"]
